@@ -1,45 +1,45 @@
-const form=document.getElementById("form")
-const textinput=document.getElementById("textInput")
-const msg= document.getElementById("msg")
-const date=document.getElementById("dateInput")
-const textarea=document.getElementById("textarea")
+const form=document.getElementById("form");
+const textinput=document.getElementById("textInput");
+const msg= document.getElementById("msg");
+const date=document.getElementById("dateInput");
+const textarea=document.getElementById("textarea");
 const tasks=document.getElementById("tasks")
 const add=document.getElementById("add")
 
 form.addEventListener("submit",(e)=>{
-    e.preventDefault()
-    formValidation()
-})
+    e.preventDefault();
+    formValidation();
+});
 
 let formValidation=()=>{
     if(textinput.value===""){
-        msg.innerHTML="Task cannot be blank"
+        msg.innerHTML="Task cannot be blank";
         
     }
     else{
-        msg.innerHTML=""
-        acceptData()
-        add.setAttribute("data-bs-dismiss","modal")
+        msg.innerHTML="";;
+        acceptData();
+        add.setAttribute("data-bs-dismiss","modal");
         add.click();
         
         (()=>{
-            add.setAttribute("data-bs-dismiss","")
+            add.setAttribute("data-bs-dismiss","");
             
-        })()
+        })();
     }
 };
-let data=[]
+let data=[];
 let acceptData=()=>{
     data.push({"text":textinput.value,
     "date":date.value,
-    "description":textarea.value})
-    console.log(data)
-    localStorage.setItem("data",JSON.stringify( data))
-    createTasks()
+    "description":textarea.value});
+    console.log(data);
+    localStorage.setItem("data",JSON.stringify( data));
+    createTasks();
 
 }
 let createTasks=()=>{
-    tasks.innerHTML=""
+    tasks.innerHTML="";
     data.map((x,y) =>{
         return (tasks.innerHTML+=`
         <div id=${y}>
@@ -53,39 +53,39 @@ let createTasks=()=>{
                     </span>
                 </div>
         `);
-    })
+    });
     
     
   resetForm();
 };
 
 let resetForm=()=>{
-    textinput.value=""
-    date.value=""
-    textarea.value=""
-}
+    textinput.value="";
+    date.value="";
+    textarea.value="";
+};
 
 let deleteTask=(e)=>{
     e.parentElement.parentElement.remove();
     data.splice(e.parentElement.parentElement.id,1);
     localStorage.setItem("data",JSON.stringify(data));
 
-    }
+    };
 
 let update=(e)=>{
-    let selectedTask= e.parentElement.parentElement
-    textinput.value=selectedTask.children[0].innerHTML
-    date.value=selectedTask.children[1].innerHTML
-    textarea.value=selectedTask.children[2].innerHTML
-    deleteTask(e)
+    let selectedTask= e.parentElement.parentElement;
+    textinput.value=selectedTask.children[0].innerHTML;
+    date.value=selectedTask.children[1].innerHTML;
+    textarea.value=selectedTask.children[2].innerHTML;
+    deleteTask(e);
 }
 
 (()=>{
-    data=JSON.parse(localStorage.getItem('data')) || []
-    console.log(data)
-    createTasks()
-    console.log(3)
-})()
+    data=JSON.parse(localStorage.getItem('data')) || [];
+    console.log(data);
+    createTasks();
+    console.log(3);
+})();
 
 
 
